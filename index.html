@@ -10,103 +10,36 @@
     <script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body, html {
-            width: 100%;
-            height: 100%;
-            font-family: 'Segoe UI', system-ui, -apple-system, 'Roboto', sans-serif;
-            background: #111b21;
-            overflow: hidden;
-        }
-
-        /* Full Screen App Container */
-        #app-container {
-            width: 100vw;
-            height: 100vh;
-            background: #fff;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body, html { width: 100%; height: 100%; font-family: 'Segoe UI', system-ui, -apple-system, 'Roboto', sans-serif; background: #111b21; overflow: hidden; }
+        #app-container { width: 100vw; height: 100vh; background: #fff; position: relative; display: flex; flex-direction: column; overflow: hidden; }
 
         /* Modern App Bar */
-        .app-bar {
-            background: #008069;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 18px;
-            min-height: 65px;
-            z-index: 15;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .app-bar-title {
-            font-size: 20px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .icon-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            transition: background 0.2s;
-        }
+        .app-bar { background: #008069; color: white; display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; min-height: 65px; z-index: 15; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .app-bar-title { font-size: 20px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .icon-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; padding: 8px; border-radius: 50%; transition: background 0.2s; }
         .icon-btn:active { background: rgba(255,255,255,0.2); }
 
         /* Login Screen */
-        #screen-login {
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            flex: 1; background: linear-gradient(145deg, #ffffff 0%, #f0f2f5 100%); padding: 30px;
-        }
-        .app-logo {
-            font-size: 80px; background: linear-gradient(135deg, #008069, #25D366);
-            -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 15px;
-        }
+        #screen-login { display: flex; flex-direction: column; justify-content: center; align-items: center; flex: 1; background: linear-gradient(145deg, #ffffff 0%, #f0f2f5 100%); padding: 30px; }
+        .app-logo { font-size: 80px; background: linear-gradient(135deg, #008069, #25D366); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 15px; }
         .login-title { font-size: 32px; font-weight: 800; color: #111b21; margin-bottom: 5px; }
         .login-subtitle { font-size: 15px; color: #54656f; margin-bottom: 40px; text-align: center; }
         .input-group { width: 100%; max-width: 350px; margin-bottom: 16px; }
-        .input-group input {
-            width: 100%; padding: 16px 20px; border: 1px solid #d1d7db; border-radius: 30px;
-            font-size: 16px; background: white; outline: none; transition: 0.2s;
-        }
+        .input-group input { width: 100%; padding: 16px 20px; border: 1px solid #d1d7db; border-radius: 30px; font-size: 16px; background: white; outline: none; transition: 0.2s; }
         .input-group input:focus { border-color: #008069; box-shadow: 0 0 0 3px rgba(0,128,105,0.1); }
-        .login-btn {
-            width: 100%; max-width: 350px; background: #008069; color: white; padding: 16px; border: none;
-            border-radius: 40px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px;
-            transition: 0.2s; box-shadow: 0 4px 10px rgba(0,128,105,0.2);
-        }
+        .login-btn { width: 100%; max-width: 350px; background: #008069; color: white; padding: 16px; border: none; border-radius: 40px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,128,105,0.2); }
         .login-btn:active { background: #005f4b; transform: scale(0.98); }
 
         /* Home Screen */
         #screen-home { display: none; flex-direction: column; flex: 1; background: #f0f2f5; }
         .tabs { display: flex; background: white; padding: 0; border-bottom: 1px solid #e9edef; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-        .tab {
-            flex: 1; text-align: center; padding: 15px 0; font-size: 15px; font-weight: 600; color: #54656f;
-            cursor: pointer; border-bottom: 3px solid transparent; transition: 0.2s;
-        }
+        .tab { flex: 1; text-align: center; padding: 15px 0; font-size: 15px; font-weight: 600; color: #54656f; cursor: pointer; border-bottom: 3px solid transparent; transition: 0.2s; }
         .tab.active { color: #008069; border-bottom: 3px solid #008069; }
-
         .list-container { flex: 1; overflow-y: auto; background: #ffffff; }
         .list-item { display: flex; align-items: center; padding: 15px; gap: 15px; border-bottom: 1px solid #f0f2f5; cursor: pointer; }
         .list-item:active { background: #f5f6f6; }
-        .user-avatar {
-            width: 50px; height: 50px; background: #dfe5e7; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; color: #54656f; font-size: 24px;
-        }
+        .user-avatar { width: 50px; height: 50px; background: #dfe5e7; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #54656f; font-size: 24px; }
         .user-info { flex: 1; }
         .user-name { font-size: 17px; font-weight: 600; color: #111b21; margin-bottom: 4px; }
         .user-status { font-size: 14px; color: #667781; }
@@ -120,11 +53,7 @@
         .chat-header-user { display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .chat-header-user .user-avatar { width: 40px; height: 40px; font-size: 18px; background: rgba(255,255,255,0.2); color: white;}
         .call-buttons-group { display: flex; gap: 5px; }
-        .chat-messages {
-            flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 8px;
-            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-            background-size: cover;
-        }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 8px; background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); background-size: cover; }
         .msg { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 15px; position: relative; word-wrap: break-word; box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
         .msg.sent { background: #dcf8c5; align-self: flex-end; border-top-right-radius: 0; }
         .msg.received { background: white; align-self: flex-start; border-top-left-radius: 0; }
@@ -136,15 +65,11 @@
         .mic-btn, .send-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: #008069; color: white; font-size: 18px; cursor: pointer; transition: 0.1s; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
         .send-btn { display: none; }
 
-        /* Zego Container */
-        #zego-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #111b21; z-index: 9999; display: none; }
+        /* Zego Container (Full Screen for Calls) */
+        #zego-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #222; z-index: 9999; display: none; }
         
-        /* Incoming & Outgoing Call Modals */
-        #incoming-call-modal, #outgoing-call-modal {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(17, 27, 33, 0.95); z-index: 10000; display: none;
-            flex-direction: column; justify-content: center; align-items: center; color: white;
-        }
+        /* Call Modals */
+        #incoming-call-modal, #outgoing-call-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(17, 27, 33, 0.95); z-index: 10000; display: none; flex-direction: column; justify-content: center; align-items: center; color: white; }
         .caller-avatar { width: 100px; height: 100px; background: #008069; border-radius: 50%; font-size: 50px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
         .caller-name-text { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
@@ -215,10 +140,10 @@
 
 </div>
 
-<!-- ZEGO CONTAINER (For Calls) -->
+<!-- ZEGO CONTAINER (For Calls - Now fixed for WhatsApp layout) -->
 <div id="zego-container"></div>
 
-<!-- OUTGOING CALL MODAL (کال کرنے والے کے لیے) -->
+<!-- OUTGOING CALL MODAL -->
 <div id="outgoing-call-modal">
     <div class="caller-avatar"><i class="fa-solid fa-user"></i></div>
     <div class="caller-name-text" id="outgoing-caller-name">Name</div>
@@ -228,7 +153,7 @@
     </div>
 </div>
 
-<!-- INCOMING CALL MODAL (کال سننے والے کے لیے) -->
+<!-- INCOMING CALL MODAL -->
 <div id="incoming-call-modal">
     <div class="caller-avatar"><i class="fa-solid fa-user"></i></div>
     <div class="caller-name-text" id="caller-name">Name</div>
@@ -254,7 +179,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // ZEGOCLOUD Config
     const APP_ID = 625024900;
     const APP_SIGN = "0278905ba1f36462ea08af553a02ea3f99ded1e68fe41390964d5a791d48a4d8";
 
@@ -267,7 +191,6 @@
     let isRecording = false;
     window.unsubscribeOutgoing = null;
 
-    // Screens Management System
     function showScreen(screenId) {
         document.getElementById('screen-login').style.display = 'none';
         document.getElementById('screen-home').style.display = 'none';
@@ -286,72 +209,43 @@
         const snapshot = await get(child(dbRef, `users/${user}`));
         if(snapshot.exists()) {
             let data = snapshot.val();
-            if(data.password === pass) finishLogin(user);
-            else alert("Incorrect Password!");
+            if(data.password === pass) finishLogin(user); else alert("Incorrect Password!");
         } else {
-            await set(ref(db, 'users/' + user), { email: email, password: pass });
-            finishLogin(user);
+            await set(ref(db, 'users/' + user), { email: email, password: pass }); finishLogin(user);
         }
     };
 
     function finishLogin(user) {
-        currentUser = user;
-        sessionStorage.setItem('activeUser', user);
-        showScreen('screen-home');
-        setupRealtimeListeners();
-        window.switchTab('chats');
+        currentUser = user; sessionStorage.setItem('activeUser', user);
+        showScreen('screen-home'); setupRealtimeListeners(); window.switchTab('chats');
     }
 
     window.logoutUser = function() { sessionStorage.removeItem('activeUser'); location.reload(); };
 
     // ========== TAB & UI ==========
     window.switchTab = function(tab) {
-        document.getElementById('tab-chats').classList.remove('active');
-        document.getElementById('tab-requests').classList.remove('active');
-        document.getElementById('chats-list').style.display = 'none';
-        document.getElementById('requests-list').style.display = 'none';
-        if(tab === 'chats') {
-            document.getElementById('tab-chats').classList.add('active');
-            document.getElementById('chats-list').style.display = 'block';
-        } else {
-            document.getElementById('tab-requests').classList.add('active');
-            document.getElementById('requests-list').style.display = 'block';
-        }
+        document.getElementById('tab-chats').classList.remove('active'); document.getElementById('tab-requests').classList.remove('active');
+        document.getElementById('chats-list').style.display = 'none'; document.getElementById('requests-list').style.display = 'none';
+        if(tab === 'chats') { document.getElementById('tab-chats').classList.add('active'); document.getElementById('chats-list').style.display = 'block'; } 
+        else { document.getElementById('tab-requests').classList.add('active'); document.getElementById('requests-list').style.display = 'block'; }
     };
 
     // ========== CHAT SYSTEM ==========
     window.openChatScreen = function(user) {
-        currentChatUser = user;
-        document.getElementById('chat-user-name').innerText = user;
-        showScreen('screen-chat');
-        
+        currentChatUser = user; document.getElementById('chat-user-name').innerText = user; showScreen('screen-chat');
         let roomID = [currentUser, currentChatUser].sort().join('_');
         const messagesRef = ref(db, 'messages/' + roomID);
-        
         onValue(messagesRef, (snapshot) => {
-            let container = document.getElementById('chat-messages');
-            container.innerHTML = '';
+            let container = document.getElementById('chat-messages'); container.innerHTML = '';
             if(snapshot.exists()) {
                 let msgs = snapshot.val();
                 Object.values(msgs).forEach(m => {
-                    let div = document.createElement('div');
-                    div.className = `msg ${m.sender === currentUser ? 'sent' : 'received'}`;
-                    
+                    let div = document.createElement('div'); div.className = `msg ${m.sender === currentUser ? 'sent' : 'received'}`;
                     if(m.type === 'text') { div.innerText = m.text; } 
-                    else if(m.type === 'audio') {
-                        let audio = document.createElement('audio');
-                        audio.controls = true; audio.src = m.text;
-                        div.appendChild(audio);
-                    }
-                    
-                    let timeSpan = document.createElement('span');
-                    timeSpan.className = 'msg-time';
-                    let date = new Date(m.time);
-                    let hours = date.getHours();
-                    let ampm = hours >= 12 ? 'PM' : 'AM';
-                    hours = hours % 12 || 12;
-                    timeSpan.innerText = `${hours}:${date.getMinutes().toString().padStart(2,'0')} ${ampm}`;
-                    div.appendChild(timeSpan);
+                    else if(m.type === 'audio') { let audio = document.createElement('audio'); audio.controls = true; audio.src = m.text; div.appendChild(audio); }
+                    let timeSpan = document.createElement('span'); timeSpan.className = 'msg-time';
+                    let date = new Date(m.time); let hours = date.getHours(); let ampm = hours >= 12 ? 'PM' : 'AM'; hours = hours % 12 || 12;
+                    timeSpan.innerText = `${hours}:${date.getMinutes().toString().padStart(2,'0')} ${ampm}`; div.appendChild(timeSpan);
                     container.appendChild(div);
                 });
                 setTimeout(() => { container.scrollTop = container.scrollHeight; }, 100);
@@ -359,43 +253,34 @@
         });
     };
 
-    window.closeChat = function() {
-        currentChatUser = null;
-        showScreen('screen-home');
-    };
+    window.closeChat = function() { currentChatUser = null; showScreen('screen-home'); };
 
     // ========== FRIENDS & REQUESTS ==========
     function setupRealtimeListeners() {
         onValue(ref(db, 'friends/' + currentUser), (snapshot) => {
-            let container = document.getElementById('chats-list');
-            container.innerHTML = '';
+            let container = document.getElementById('chats-list'); container.innerHTML = '';
             if(snapshot.exists()) {
                 let friends = snapshot.val();
                 Object.keys(friends).forEach(f => {
-                    let div = document.createElement('div');
-                    div.className = 'list-item';
+                    let div = document.createElement('div'); div.className = 'list-item';
                     div.innerHTML = `<div class="user-avatar"><i class="fa-solid fa-user"></i></div><div class="user-info"><div class="user-name">${f}</div><div class="user-status">Tap to chat</div></div>`;
-                    div.onclick = () => window.openChatScreen(f);
-                    container.appendChild(div);
+                    div.onclick = () => window.openChatScreen(f); container.appendChild(div);
                 });
             } else { container.innerHTML = '<div style="text-align:center; padding: 40px; color:#667781;">No friends yet. Go to Friends tab to add!</div>'; }
         });
 
         onValue(ref(db, 'requests/' + currentUser), (snapshot) => {
-            let reqDiv = document.getElementById('incoming-requests');
-            reqDiv.innerHTML = '';
+            let reqDiv = document.getElementById('incoming-requests'); reqDiv.innerHTML = '';
             if(snapshot.exists()) {
                 let reqs = snapshot.val();
                 Object.keys(reqs).forEach(from => {
-                    let item = document.createElement('div');
-                    item.className = 'list-item';
+                    let item = document.createElement('div'); item.className = 'list-item';
                     item.innerHTML = `<div class="user-avatar"><i class="fa-solid fa-user"></i></div><div class="user-info"><div class="user-name">${from}</div></div><button class="action-btn" onclick="window.acceptFriendReq('${from}')">Accept</button>`;
                     reqDiv.appendChild(item);
                 });
             } else { reqDiv.innerHTML = '<div style="padding:20px; text-align:center; color:#7e8c8d;">No pending requests</div>'; }
         });
 
-        // INCOMING CALL LISTENER (کال سننے والے کے لیے)
         onValue(ref(db, 'calls/' + currentUser), (snapshot) => {
             if(!currentUser) return;
             if(snapshot.exists()) {
@@ -406,13 +291,9 @@
                     document.getElementById('call-type-desc').innerText = `Incoming ${callData.type} Call...`;
                     document.getElementById('incoming-call-modal').style.display = 'flex';
                 } else if(callData.status === 'cancelled' || Date.now() - callData.timestamp >= 45000) {
-                    document.getElementById('incoming-call-modal').style.display = 'none';
-                    pendingCall = null;
+                    document.getElementById('incoming-call-modal').style.display = 'none'; pendingCall = null;
                 }
-            } else {
-                document.getElementById('incoming-call-modal').style.display = 'none';
-                pendingCall = null;
-            }
+            } else { document.getElementById('incoming-call-modal').style.display = 'none'; pendingCall = null; }
         });
     }
 
@@ -421,156 +302,118 @@
         if(!toUser || toUser === currentUser) return;
         const snap = await get(child(ref(db), `users/${toUser}`));
         if(snap.exists()) {
-            await set(ref(db, `requests/${toUser}/${currentUser}`), true);
-            alert(`Request sent to ${toUser}!`);
-            document.getElementById('search-user').value = '';
+            await set(ref(db, `requests/${toUser}/${currentUser}`), true); alert(`Request sent to ${toUser}!`); document.getElementById('search-user').value = '';
         } else { alert("User not found!"); }
     };
 
     window.acceptFriendReq = async function(fromUser) {
-        await update(ref(db, `friends/${currentUser}`), { [fromUser]: true });
-        await update(ref(db, `friends/${fromUser}`), { [currentUser]: true });
-        await remove(ref(db, `requests/${currentUser}/${fromUser}`));
+        await update(ref(db, `friends/${currentUser}`), { [fromUser]: true }); await update(ref(db, `friends/${fromUser}`), { [currentUser]: true }); await remove(ref(db, `requests/${currentUser}/${fromUser}`));
     };
 
     // ========== MESSAGES & VOICE ==========
     window.toggleSendIcon = function() {
         let val = document.getElementById('msg-input').value.trim();
-        document.getElementById('mic-btn').style.display = val ? 'none' : 'flex';
-        document.getElementById('send-btn').style.display = val ? 'flex' : 'none';
+        document.getElementById('mic-btn').style.display = val ? 'none' : 'flex'; document.getElementById('send-btn').style.display = val ? 'flex' : 'none';
     };
     window.handleEnter = function(e) { if(e.key === 'Enter') window.sendTextMsg(); }
     window.sendTextMsg = function() {
-        let text = document.getElementById('msg-input').value.trim();
-        if(!text || !currentChatUser) return;
+        let text = document.getElementById('msg-input').value.trim(); if(!text || !currentChatUser) return;
         let roomID =[currentUser, currentChatUser].sort().join('_');
         push(ref(db, 'messages/' + roomID), { sender: currentUser, text: text, type: 'text', time: Date.now() });
-        document.getElementById('msg-input').value = '';
-        window.toggleSendIcon();
+        document.getElementById('msg-input').value = ''; window.toggleSendIcon();
     };
     window.toggleMicRecording = async function() {
         const micBtn = document.getElementById('mic-btn');
         if(!isRecording) {
             try {
-                let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                mediaRecorder = new MediaRecorder(stream);
-                audioChunks =[];
+                let stream = await navigator.mediaDevices.getUserMedia({ audio: true }); mediaRecorder = new MediaRecorder(stream); audioChunks =[];
                 mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
                 mediaRecorder.onstop = () => {
-                    let blob = new Blob(audioChunks, { type: 'audio/webm' });
-                    let reader = new FileReader(); reader.readAsDataURL(blob);
-                    reader.onloadend = () => {
-                        let roomID = [currentUser, currentChatUser].sort().join('_');
-                        push(ref(db, 'messages/' + roomID), { sender: currentUser, text: reader.result, type: 'audio', time: Date.now() });
-                    };
+                    let blob = new Blob(audioChunks, { type: 'audio/webm' }); let reader = new FileReader(); reader.readAsDataURL(blob);
+                    reader.onloadend = () => { let roomID = [currentUser, currentChatUser].sort().join('_'); push(ref(db, 'messages/' + roomID), { sender: currentUser, text: reader.result, type: 'audio', time: Date.now() }); };
                     stream.getTracks().forEach(track => track.stop());
                 };
-                mediaRecorder.start(); isRecording = true;
-                micBtn.style.background = "#f15c6d"; micBtn.innerHTML = '<i class="fa-solid fa-stop"></i>';
-            } catch(e) { alert("Microphone permission required!"); }
+                mediaRecorder.start(); isRecording = true; micBtn.style.background = "#f15c6d"; micBtn.innerHTML = '<i class="fa-solid fa-stop"></i>';
+            } catch(e) { alert("Please run on HTTPS or Localhost for Microphone access!"); }
         } else {
             if(mediaRecorder && mediaRecorder.state === "recording") mediaRecorder.stop();
             isRecording = false; micBtn.style.background = "#008069"; micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
         }
     };
 
-    // ========== ADVANCED CALL SYSTEM ==========
-
-    // 1. کال کرنے والے کا فنکشن (Caller)
+    // ========== ADVANCED CALL SYSTEM (ZegoCloud Fixes) ==========
     window.startCall = async function(type) {
         if(!currentChatUser) return;
-        try {
+        try { // چیک کریں کہ مائیک کیمرہ الاؤ ہے یا نہیں (Requires HTTPS)
             if(type === 'Video') await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
             else await navigator.mediaDevices.getUserMedia({ audio: true });
-        } catch(e) { alert("Please allow permissions to call."); return; }
+        } catch(e) { 
+            alert("Camera/Mic blocked! Make sure you are on HTTPS or Localhost (127.0.0.1) and permissions are allowed."); return; 
+        }
 
         let roomID = [currentUser, currentChatUser].sort().join('_') + "_call_" + Date.now();
-        
-        // Outgoing Screen Show کریں
         document.getElementById('outgoing-caller-name').innerText = currentChatUser;
         document.getElementById('outgoing-call-type').innerText = `Ringing (${type})...`;
         document.getElementById('outgoing-call-modal').style.display = 'flex';
 
-        // Firebase میں سگنل بھیجیں
         const callRef = ref(db, 'calls/' + currentChatUser);
         await set(callRef, { from: currentUser, room: roomID, type: type, status: 'ringing', timestamp: Date.now() });
         
-        // یہ چیک کرنے کے لئے Listen کریں کہ کیا دوسرے یوزر نے کال اٹھائی یا کاٹ دی
-        if(window.unsubscribeOutgoing) window.unsubscribeOutgoing(); // Clear previous listener
-        
+        if(window.unsubscribeOutgoing) window.unsubscribeOutgoing();
         window.unsubscribeOutgoing = onValue(callRef, (snapshot) => {
             if(snapshot.exists()) {
                 let data = snapshot.val();
                 if(data.status === 'accepted') {
-                    // یوزر نے کال اٹھا لی!
                     document.getElementById('outgoing-call-modal').style.display = 'none';
                     if(window.unsubscribeOutgoing) window.unsubscribeOutgoing();
-                    joinZego(data.room, data.type);
-                    remove(callRef); // Clean up
+                    joinZego(data.room, data.type); remove(callRef);
                 } else if(data.status === 'rejected') {
-                    // یوزر نے کال کاٹ دی!
                     document.getElementById('outgoing-call-modal').style.display = 'none';
-                    if(window.unsubscribeOutgoing) window.unsubscribeOutgoing();
-                    alert(`${currentChatUser} declined the call.`);
-                    remove(callRef);
+                    if(window.unsubscribeOutgoing) window.unsubscribeOutgoing(); alert(`${currentChatUser} declined the call.`); remove(callRef);
                 }
-            } else {
-                // کال کینسل ہو گئی
-                document.getElementById('outgoing-call-modal').style.display = 'none';
-            }
+            } else { document.getElementById('outgoing-call-modal').style.display = 'none'; }
         });
     };
 
-    // 2. کال کرنے والے کا خود کال کینسل کرنا
     window.cancelOutgoingCall = async function() {
-        if(!currentChatUser) return;
-        const callRef = ref(db, 'calls/' + currentChatUser);
-        await remove(callRef);
-        document.getElementById('outgoing-call-modal').style.display = 'none';
-        if(window.unsubscribeOutgoing) window.unsubscribeOutgoing();
+        if(!currentChatUser) return; const callRef = ref(db, 'calls/' + currentChatUser); await remove(callRef);
+        document.getElementById('outgoing-call-modal').style.display = 'none'; if(window.unsubscribeOutgoing) window.unsubscribeOutgoing();
     };
 
-    // 3. کال سننے والے کا کال ایکسیپٹ کرنا (Callee)
     window.acceptIncomingCall = async function() {
         if(pendingCall) {
             try {
                 if(pendingCall.type === 'Video') await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
                 else await navigator.mediaDevices.getUserMedia({ audio: true });
-            } catch(e) { alert("Permissions needed."); return; }
-            
-            let room = pendingCall.room;
-            let type = pendingCall.type;
-            
-            // Firebase کو بتائیں کہ کال ایکسیپٹ ہو گئی ہے (تاکہ کالر کو پتا چل جائے)
+            } catch(e) { alert("Microphone/Camera permission blocked!"); return; }
+            let room = pendingCall.room; let type = pendingCall.type;
             await update(ref(db, 'calls/' + currentUser), { status: 'accepted' });
-            
             document.getElementById('incoming-call-modal').style.display = 'none';
-            joinZego(room, type);
-            pendingCall = null;
+            joinZego(room, type); pendingCall = null;
         }
     };
 
-    // 4. کال سننے والے کا کال ریجیکٹ کرنا
     window.rejectIncomingCall = async function() {
-        if(currentUser) {
-            await update(ref(db, 'calls/' + currentUser), { status: 'rejected' });
-            // تھوڑی دیر بعد ڈیلیٹ کریں تاکہ کالر کو پتا چل سکے
-            setTimeout(() => { remove(ref(db, 'calls/' + currentUser)); }, 2000);
-        }
-        document.getElementById('incoming-call-modal').style.display = 'none';
-        pendingCall = null;
+        if(currentUser) { await update(ref(db, 'calls/' + currentUser), { status: 'rejected' }); setTimeout(() => { remove(ref(db, 'calls/' + currentUser)); }, 2000); }
+        document.getElementById('incoming-call-modal').style.display = 'none'; pendingCall = null;
     };
 
-    // 5. ZegoCloud کو جوائن کرنا
     function joinZego(roomID, type) {
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(APP_ID, APP_SIGN, roomID, currentUser, currentUser);
         zp = ZegoUIKitPrebuilt.create(kitToken);
         document.getElementById('zego-container').style.display = 'block';
+        
         zp.joinRoom({
             container: document.querySelector("#zego-container"),
-            scenario: { mode: ZegoUIKitPrebuilt.OneONoneCall },
-            turnOnMicrophoneWhenJoining: true,
-            turnOnCameraWhenJoining: type === 'Video',
+            scenario: { 
+                mode: ZegoUIKitPrebuilt.OneONoneCall // یہ واٹس ایپ کی طرح خود بخود چھوٹا/بڑا سکرین کرے گا
+            },
+            turnOnMicrophoneWhenJoining: true, // مائیک خود آن ہو جائے گا
+            turnOnCameraWhenJoining: type === 'Video', // ویڈیو کال پر کیمرہ خود آن ہو جائے گا
+            showMyCameraToggleButton: true, // کیمرہ آن/آف کا بٹن
+            showMyMicrophoneToggleButton: true, // مائیک آن/آف کا بٹن
+            showAudioVideoSettingsButton: true, // سیٹنگ کا بٹن
+            showRoomTimer: true, // 👈 یہ رہا ٹائمر! کال کنیکٹ ہوتے ہی ٹائم چلنا شروع ہو جائے گا
             showPreJoinView: false,
             showLeavingView: false,
             onLeaveRoom: () => {
@@ -579,17 +422,14 @@
                 if(currentChatUser) remove(ref(db, 'calls/' + currentChatUser)).catch(()=>{});
             },
             onUserLeft: () => {
-                if(zp) zp.destroy();
-                document.getElementById('zego-container').style.display = 'none';
+                if(zp) zp.destroy(); document.getElementById('zego-container').style.display = 'none';
             }
         });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        let saved = sessionStorage.getItem('activeUser');
-        if(saved) finishLogin(saved); else showScreen('screen-login');
+        let saved = sessionStorage.getItem('activeUser'); if(saved) finishLogin(saved); else showScreen('screen-login');
     });
-
 </script>
 </body>
 </html>
